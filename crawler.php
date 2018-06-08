@@ -17,6 +17,11 @@
       </form>
       <a href="crawler.php">reset</a>
     </div>
+    <div class="results">
+      <?php
+        include_once "simple_html_dom.php";
+      ?>
+    </div>
   </body>
 </html>
 
