@@ -20,6 +20,20 @@
     <div class="results">
       <?php
         include_once "simple_html_dom.php";
+
+        $urlAddress = empty($_GET['urlAddress']) ? "" : $_GET['urlAddress'];
+        if ($urlAddress) {
+          echo "Searched web page: $urlAddress";
+          getHtmlFromRemote($urlAddress);
+        }
+
+        function getHtmlFromRemote($url) {
+          $html = file_get_html($url);
+
+          foreach($html->find('a') as $element){
+            echo $element->href . '<br>';
+          }
+        }
       ?>
     </div>
   </body>
