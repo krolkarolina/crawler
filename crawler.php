@@ -20,19 +20,28 @@
     <div class="results">
       <?php
         include_once "simple_html_dom.php";
+        $allLinks = array();
+        $url = "";
 
         $urlAddress = empty($_GET['urlAddress']) ? "" : $_GET['urlAddress'];
         if ($urlAddress) {
           echo "Searched web page: $urlAddress";
-          getHtmlFromRemote($urlAddress);
+          $allLinks = getHtmlFromRemote($urlAddress);
+
+          foreach ($allLinks as $link) {
+            $url .= '<a href="'.$link.'">'.$link.'</a>';
+          }
+          echo $url;
         }
 
         function getHtmlFromRemote($url) {
           $html = file_get_html($url);
 
-          foreach($html->find('a') as $element){
-            echo $element->href . '<br>';
+          foreach($html->getElementByTagName('a') as $element){
+            $allLinks[] = $element->href . '<br>';
           }
+          $allLinks = array_unique($allLinks);
+          return $allLinks;
         }
       ?>
     </div>
